@@ -85,34 +85,33 @@ GetCountry().then(result => {
     select.addEventListener('click', _ => {
         select.classList.toggle('show');
         select.nextElementSibling.classList.toggle('show')
-        select.nextElementSibling.querySelectorAll('li').forEach(element => {
-            element.addEventListener('click', _ => {
-                select.children[0].setAttribute('value',element.textContent);
-                select.children[0].textContent = element.textContent;
-                select.nextElementSibling.classList.remove('show')
-                select.classList.remove('show');
-                let countries = ShowByRegion(element.textContent);
-                result_box.innerHTML = '';
-                countries.then(async(e) => {
-                    for (let i = 0; i < e.length; i++) {
-                     setTimeout(_ => {
-                            result_box.innerHTML += `
-                        <div class="card">
-                            <img src="${e[i].flag}" alt="" class="card-img-top">
-                            <div class="card-body">
-                                <h3 class="card-title">${e[i].name}</h3>
-                                <p class="card-text">Population: <span>${separateNumber(e[i].population)}</span></p>
-                                <p class="card-text">Region: <span>${e[i].region}</span></p>
-                                <p class="card-text">Capital: <span>${e[i].capital}</span></p>
-                            </div>
-                        </div>`;
-                        }, 30);
-                    }
-                })
+    })
+    select.nextElementSibling.querySelectorAll('li').forEach(element => {
+        element.addEventListener('click', _ => {
+            select.children[0].setAttribute('value',element.textContent);
+            select.children[0].textContent = element.textContent;
+            select.nextElementSibling.classList.remove('show')
+            select.classList.remove('show');
+            let countries = ShowByRegion(element.textContent);
+            result_box.innerHTML = '';
+            countries.then(async(e) => {
+                for (let i = 0; i < e.length; i++) {
+                 setTimeout(_ => {
+                        result_box.innerHTML += `
+                    <div class="card">
+                        <img src="${e[i].flag}" alt="" class="card-img-top">
+                        <div class="card-body">
+                            <h3 class="card-title">${e[i].name}</h3>
+                            <p class="card-text">Population: <span>${separateNumber(e[i].population)}</span></p>
+                            <p class="card-text">Region: <span>${e[i].region}</span></p>
+                            <p class="card-text">Capital: <span>${e[i].capital}</span></p>
+                        </div>
+                    </div>`;
+                    }, 100);
+                }
             })
         })
     })
-
     ShowRandomly();
     function ShowRandomly() {
         result_box.innerHTML = ''
